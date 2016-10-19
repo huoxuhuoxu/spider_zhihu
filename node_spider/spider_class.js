@@ -4,6 +4,7 @@
 class UrlHandler {
 
 	constructor(){
+		this.new_url_list = [];
 		this.new_url = new Set();
 		this.old_url = new Set();
 	}
@@ -16,10 +17,10 @@ class UrlHandler {
 	// 获取一个url
 	getNewUrl (){
 		var _self = this,
-		 	arr = Array.from(_self.new_url),
-			new_url = arr.shift();
+			new_url = new_url_list.pop();
+
 		this.old_url.add(new_url);
-		this.new_url = new Set(arr);
+		this.new_url.delete(new_url);
 		return new_url;
 	}
 
@@ -28,6 +29,7 @@ class UrlHandler {
 		if(this.new_url.has(pathName) || this.old_url.has(pathName)){
 			return '';
 		}
+		this.new_url_list.push(pathName);
 		this.new_url.add(pathName);
 	}
 
@@ -37,7 +39,7 @@ class UrlHandler {
 			return '';
 		}
 		for(var pathName in pathNames){
-			this.new_url.add(pathName);
+			this.addNewUrl(pathName);
 		}
 	}
 
