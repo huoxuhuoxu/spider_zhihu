@@ -16,8 +16,7 @@ class UrlHandler {
 
 	// 获取一个url
 	getNewUrl (){
-		var _self = this,
-			new_url = new_url_list.pop();
+		var new_url = this.new_url_list.shift();
 
 		this.old_url.add(new_url);
 		this.new_url.delete(new_url);
@@ -38,9 +37,20 @@ class UrlHandler {
 		if(!pathNames || !pathNames.length){
 			return '';
 		}
-		for(var pathName in pathNames){
-			this.addNewUrl(pathName);
+		for(var i in pathNames){
+			this.addNewUrl(pathNames[i]);
 		}
+	}
+
+	// 批量获取
+	getNewUrls (iNum){
+		var arr = [];
+		if(this.hasNewUrl() > iNum){
+			for(let i = 0; i< iNum; i++){
+				arr.push(this.getNewUrl())
+			}
+		}
+		return arr;
 	}
 
 

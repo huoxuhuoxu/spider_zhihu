@@ -1,4 +1,6 @@
 
+// 数据输出器
+
 var fs = require("fs");
 
 class OutputerHandler{
@@ -9,6 +11,7 @@ class OutputerHandler{
 	}
 
 	setData_list (data){
+		if(!data.name){return;}
 		this.data_list.push(data);
 	}
 
@@ -17,9 +20,8 @@ class OutputerHandler{
 	}
 
 	outerData (){
-		let str = null, _self = this;
-		str = this.__generatorDataToStr();
-		fs.writeFile(_self.word_name, str,function(err){
+		let str = this.__generatorDataToStr();
+		fs.writeFile(this.word_name, str,function(err){
 			if(err){
 				console.error(err);
 				process.exit(0);
